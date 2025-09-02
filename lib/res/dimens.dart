@@ -15,6 +15,7 @@ class Dimens {
   static const double headlineLarge = 19;
 
   // Shimmer
+  static const double shimmerCardRadius = 8.0;
   static const double shimmerHeightSmall = 40.0;
   static const double shimmerHeightMedium = 80.0;
   static const double shimmerHeightLarge = 120.0;

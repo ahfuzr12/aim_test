@@ -8,7 +8,7 @@ class SportBloc extends Bloc<SportEvent, SportState> {
     on<LoadSports>((event, emit) async {
       emit(SportLoading());
 
-      await Future.delayed(const Duration(seconds: 2)); // load from server simulation
+      await Future.delayed(const Duration(seconds: 1)); // load from server simulation
 
       final sports = [
         Sport(id: "SPORT001", name: "Mini Soccer"),

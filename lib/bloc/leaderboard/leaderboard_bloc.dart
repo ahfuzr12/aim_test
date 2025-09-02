@@ -8,7 +8,7 @@ class LeaderboardBloc extends Bloc<LeaderboardEvent, LeaderboardState> {
     on<LoadLeaderboard>((event, emit) async {
       emit(LeaderboardLoading());
 
-      await Future.delayed(const Duration(seconds: 2)); // load from server simulation
+      await Future.delayed(const Duration(seconds: 1)); // load from server simulation
 
       final dummyData = [
         Community(name: "Purple", city: "Surabaya", points: 201, rank: 1),

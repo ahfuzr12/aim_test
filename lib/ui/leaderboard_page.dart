@@ -1,11 +1,16 @@
 import "package:aim_test/bloc/leaderboard/leaderboard_bloc.dart";
 import "package:aim_test/bloc/leaderboard/leaderboard_event.dart";
 import "package:aim_test/bloc/leaderboard/leaderboard_state.dart";
+import "package:aim_test/bloc/province/province_bloc.dart";
+import "package:aim_test/bloc/province/province_event.dart";
+import "package:aim_test/bloc/province/province_state.dart";
 import "package:aim_test/bloc/sport/sport_bloc.dart";
 import "package:aim_test/bloc/sport/sport_event.dart";
+import "package:aim_test/bloc/sport/sport_state.dart";
 import "package:aim_test/model/community.dart";
 import "package:aim_test/res/dimens.dart";
 import "package:aim_test/widget/custom_dropdown.dart";
+import "package:aim_test/widget/custom_shimmer.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:easy_localization/easy_localization.dart";
@@ -19,6 +24,7 @@ class LeaderboardPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => LeaderboardBloc()..add(LoadLeaderboard())),
         BlocProvider(create: (_) => SportBloc()..add(LoadSports())),
+        BlocProvider(create: (_) => ProvinceBloc()..add(LoadProvinces())),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -61,31 +67,64 @@ class LeaderboardPage extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium, vertical: Dimens.paddingSmall),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CustomDropdown(
-                  value: "Mini Soccer",
-                  items: const ["Mini Soccer", "Basketball", "Futsal"],
-                  onChanged: (value) {
-                    // TODO: handle change
+                BlocBuilder<SportBloc, SportState>(
+                  builder: (context, sportState) {
+                    if (sportState is SportLoaded) {
+                      return CustomDropdown(
+                        value: sportState.selected?.id,
+                        items: sportState.sports
+                            .map((sport) => DropdownMenuItem(
+                                  value: sport.id,
+                                  child: Text(sport.name),
+                                ))
+                            .toList(),
+                        onChanged: (sport) {
+                          if (sport != null) {
+                            context.read<SportBloc>().add(SelectSport(sport));
+                          }
+                        },
+                      );
+                    }
+                    return Expanded(
+                      child: const CustomShimmer(width: double.infinity, height: Dimens.shimmerHeightSmall),
+                    );
                   },
                 ),
-                const SizedBox(width: 12),
-                DropdownButton<String>(
-                  value: tr("surabaya"),
-                  items: [tr("surabaya")].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
-                  onChanged: (_) {},
+                const SizedBox(width: Dimens.paddingSmall),
+                BlocBuilder<ProvinceBloc, ProvinceState>(
+                  builder: (context, provinceState) {
+                    if (provinceState is ProvinceLoaded) {
+                      return CustomDropdown(
+                        value: provinceState.selected?.code,
+                        items: provinceState.provinces
+                            .map((province) => DropdownMenuItem(
+                                  value: province.code,
+                                  child: Text(province.name),
+                                ))
+                            .toList(),
+                        onChanged: (province) {
+                          if (province != null) {
+                            context.read<ProvinceBloc>().add(SelectProvince(province));
+                          }
+                        },
+                      );
+                    }
+                    return Expanded(
+                      child: const CustomShimmer(width: double.infinity, height: Dimens.shimmerHeightSmall),
+                    );
+                  },
                 ),
               ],
             ),
           ),
-
-          // Card komunitas user
           Card(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium, vertical: 0),
             child: ListTile(
+              contentPadding: EdgeInsets.symmetric(horizontal: Dimens.paddingSmall),
               leading: const Icon(Icons.groups, color: Colors.orange),
               title: const Text("Far East United"),
               subtitle: Text(tr("surabaya")),
@@ -93,7 +132,7 @@ class LeaderboardPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingMedium),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
@@ -102,8 +141,6 @@ class LeaderboardPage extends StatelessWidget {
               ),
             ),
           ),
-
-          // Podium
           Expanded(
             flex: 3,
             child: Row(
@@ -116,8 +153,6 @@ class LeaderboardPage extends StatelessWidget {
               ],
             ),
           ),
-
-          // Daftar lainnya
           Expanded(
             flex: 4,
             child: Container(
@@ -130,6 +165,7 @@ class LeaderboardPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final community = others[index];
                   return ListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: Dimens.paddingSmall),
                     leading: CircleAvatar(
                       backgroundColor: Colors.grey.shade200,
                       child: Text("${community.rank}"),
