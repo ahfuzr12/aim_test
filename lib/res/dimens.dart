@@ -6,6 +6,16 @@ class Dimens {
   static const double paddingMedium = 24.0;
   static const double paddingLarge = 36.0;
 
+  // Border
+  static const double borderRadius = 12.0;
+  static const double borderRadiusCircular = 5.0;
+
+  // Button
+  static const double buttonHeight = 60;
+  static const double buttonWidth = 240;
+  static const double buttonRadius = 12;
+  static const double iconSize = 20.0;
+
   // Font
   static const double fontDefault = 13;
   static const double fontSmall = 11;

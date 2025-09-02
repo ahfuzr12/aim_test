@@ -1,3 +1,4 @@
+import "package:aim_test/res/dimens.dart";
 import "package:flutter/material.dart";
 
 class CustomDropdown<T> extends StatelessWidget {
@@ -17,10 +18,10 @@ class CustomDropdown<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.paddingSmall),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(Dimens.borderRadius),
         border: Border.all(color: Colors.grey.shade300),
       ),
       child: DropdownButtonHideUnderline(
@@ -28,7 +29,7 @@ class CustomDropdown<T> extends StatelessWidget {
           value: value,
           hint: Text(hint ?? ""),
           icon: const Icon(Icons.arrow_drop_down),
-          style: const TextStyle(color: Colors.black, fontSize: 14),
+          style: const TextStyle(color: Colors.black, fontSize: Dimens.fontDefault),
           onChanged: onChanged,
           items: items,
         ),
