@@ -15,8 +15,8 @@ class PeriodBloc extends Bloc<PeriodEvent, PeriodState> {
       List<Period> periods = [
         Period(id: "all", label: "All Time"),
         Period(id: "current_season", label: "Januari - Juli 2025", isCurrent: true),
-        Period(id: "oct-dec-2024", label: "Oktober - Desember 2024"),
-        Period(id: "jul-aug-2024", label: "Juli - Agustus 2024"),
+        Period(id: "last_summer", label: "Oktober - Desember 2024"),
+        Period(id: "last_winter", label: "Juli - Agustus 2024"),
       ];
 
       Period selected = _selected ?? periods.firstWhere((e) => e.isCurrent);
@@ -27,7 +27,7 @@ class PeriodBloc extends Bloc<PeriodEvent, PeriodState> {
     on<SelectPeriod>((event, emit) {
       if (state is PeriodLoaded) {
         final current = state as PeriodLoaded;
-        final selected = current.periods.firstWhere((s) => s.id == event.period.id);
+        final selected = current.periods.firstWhere((s) => s.id == event.id);
 
         _selected = selected;
         emit(PeriodLoaded(periods: current.periods, selected: selected));

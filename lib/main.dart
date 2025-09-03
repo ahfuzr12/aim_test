@@ -5,6 +5,8 @@ import "package:easy_localization/easy_localization.dart";
 import "package:responsive_framework/responsive_framework.dart";
 import "ui/leaderboard_page.dart";
 
+final GlobalKey<ScaffoldMessengerState> messengerKey = GlobalKey();
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -13,7 +15,7 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: const [Locale("en"), Locale("id")],
       path: "assets/string",
-      fallbackLocale: const Locale("en"),
+      fallbackLocale: const Locale("id"),
       child: const MyApp(),
     ),
   );
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      scaffoldMessengerKey: messengerKey,
       locale: context.locale,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: child!,

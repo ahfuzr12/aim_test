@@ -12,7 +12,9 @@ class Dimens {
 
   // Button
   static const double buttonHeight = 60;
+  static const double buttonHeightSmall = 40;
   static const double buttonWidth = 240;
+  static const double buttonWidthSmall = 80;
   static const double buttonRadius = 12;
   static const double iconSize = 20.0;
 
@@ -23,6 +25,9 @@ class Dimens {
   static const double headlineSmall = 11;
   static const double headlineMedium = 15;
   static const double headlineLarge = 19;
+
+  // Image
+  static const double imageSizeMedium = 120;
 
   // Shimmer
   static const double shimmerCardRadius = 8.0;

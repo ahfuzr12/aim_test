@@ -1,20 +1,19 @@
-import "package:aim_test/model/period.dart";
 import "package:equatable/equatable.dart";
 
 abstract class PeriodEvent extends Equatable {
   const PeriodEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class LoadPeriods extends PeriodEvent {}
 
 class SelectPeriod extends PeriodEvent {
-  final Period period;
+  final String id;
 
-  const SelectPeriod(this.period);
+  const SelectPeriod(this.id);
 
   @override
-  List<Object> get props => [period];
+  List<Object?> get props => [id];
 }
