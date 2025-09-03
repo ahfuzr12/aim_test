@@ -1,6 +1,15 @@
 {
   "leaderboard_title": "Leaderboard",
   "period_title": "Period",
+  "earn_point_title": "How To Earn Point",
+  "earn_point_message": "You must complete the game to earn points.",
+  "match_results": "Match Results",
+  "common_win": "Win",
+  "common_draw": "Draw",
+  "common_lose": "Lose",
+  "bonus_point": "Bonus Points",
+  "winning_bonus": "Winning Bonus",
+  "winning_bonus_description": "Points (n) are earned based on the difference in ranking with opponents on the leaderboard. The maximum number of points that can be added is 20 Pts.",
   "current_season": "Current Season",
   "action_apply": "Apply",
   "your_community_rank": "Your community is ranked #{}, let's share!"

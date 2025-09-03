@@ -15,6 +15,7 @@ import "package:aim_test/model/period.dart";
 import "package:aim_test/model/province.dart";
 import "package:aim_test/res/colors.dart";
 import "package:aim_test/res/dimens.dart";
+import "package:aim_test/ui/earn_point_bottom_sheet.dart";
 import "package:aim_test/ui/period_bottom_sheet.dart";
 import "package:aim_test/widget/custom_dropdown.dart";
 import "package:aim_test/widget/custom_shimmer.dart";
@@ -41,18 +42,21 @@ class LeaderboardPage extends StatelessWidget {
             tr("leaderboard_title"),
           ),
           actions: [
-            Container(
-              width: 20,
-              height: 20,
-              padding: EdgeInsets.all(Dimens.paddingSmall),
-              decoration: BoxDecoration(
-                color: ColorResources.primaryLight,
-                borderRadius: BorderRadius.circular(5),
-                image: DecorationImage(
-                  image: AssetImage("assets/drawable/question_mark.png"),
-                  fit: BoxFit.cover,
+            InkWell(
+              child: Container(
+                width: 20,
+                height: 20,
+                padding: EdgeInsets.all(Dimens.paddingSmall),
+                decoration: BoxDecoration(
+                  color: ColorResources.primaryLight,
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                    image: AssetImage("assets/drawable/question_mark.png"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+              onTap: () => _showInfo(context),
             ),
             const SizedBox(width: Dimens.paddingWidget),
           ],
@@ -85,6 +89,14 @@ class LeaderboardPage extends StatelessWidget {
     if (context.mounted && result != null && result is Period) {
       context.read<PeriodBloc>().add(SelectPeriod(result));
     }
+  }
+
+  Future<void> _showInfo(BuildContext context) async {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => const EarnPointBottomSheet(),
+    );
   }
 
   Widget _buildLeaderboard({required BuildContext context, required List<Community> communities}) {
